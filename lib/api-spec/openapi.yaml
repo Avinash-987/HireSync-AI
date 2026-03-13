@@ -1,22 +1,38 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: HireSync AI - Job Finder Platform API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: auth
+    description: Authentication operations
+  - name: users
+    description: User profile operations
+  - name: resume
+    description: Resume upload and analysis
+  - name: jobs
+    description: Job search and recommendations
+  - name: applications
+    description: Application tracking
+  - name: savedJobs
+    description: Saved/bookmarked jobs
+  - name: alerts
+    description: Job alerts
+  - name: notifications
+    description: In-app notifications
+  - name: admin
+    description: Admin operations
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,7 +40,630 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /auth/register:
+    post:
+      operationId: authRegister
+      tags: [auth]
+      summary: Register new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterInput"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/login:
+    post:
+      operationId: authLogin
+      tags: [auth]
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginInput"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/logout:
+    post:
+      operationId: authLogout
+      tags: [auth]
+      summary: Logout
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+
+  /auth/me:
+    get:
+      operationId: authGetMe
+      tags: [auth]
+      summary: Get current user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /profile:
+    get:
+      operationId: getProfile
+      tags: [users]
+      summary: Get user profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Profile data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+    put:
+      operationId: updateProfile
+      tags: [users]
+      summary: Update user profile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileInput"
+      responses:
+        "200":
+          description: Profile updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+
+  /resume:
+    get:
+      operationId: getResumes
+      tags: [resume]
+      summary: Get user resumes
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of resumes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Resume"
+
+  /resume/upload:
+    post:
+      operationId: uploadResume
+      tags: [resume]
+      summary: Upload resume
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Resume uploaded and parsed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Resume"
+
+  /resume/{id}:
+    get:
+      operationId: getResume
+      tags: [resume]
+      summary: Get resume by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Resume
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Resume"
+    delete:
+      operationId: deleteResume
+      tags: [resume]
+      summary: Delete resume
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Resume deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+
+  /jobs/search:
+    get:
+      operationId: searchJobs
+      tags: [jobs]
+      summary: Search jobs
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+        - name: location
+          in: query
+          schema:
+            type: string
+        - name: remote
+          in: query
+          schema:
+            type: string
+        - name: experience
+          in: query
+          schema:
+            type: string
+        - name: salary_min
+          in: query
+          schema:
+            type: number
+        - name: salary_max
+          in: query
+          schema:
+            type: number
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Job search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobsResponse"
+
+  /jobs/recommended:
+    get:
+      operationId: getRecommendedJobs
+      tags: [jobs]
+      summary: Get AI-recommended jobs for user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Recommended jobs with match scores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecommendedJob"
+
+  /jobs/{id}:
+    get:
+      operationId: getJob
+      tags: [jobs]
+      summary: Get job details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Job details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+
+  /applications:
+    get:
+      operationId: getApplications
+      tags: [applications]
+      summary: Get user applications
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Applications list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Application"
+    post:
+      operationId: createApplication
+      tags: [applications]
+      summary: Track a job application
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplicationInput"
+      responses:
+        "201":
+          description: Application tracked
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+
+  /applications/{id}:
+    put:
+      operationId: updateApplication
+      tags: [applications]
+      summary: Update application status
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplicationUpdateInput"
+      responses:
+        "200":
+          description: Application updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+    delete:
+      operationId: deleteApplication
+      tags: [applications]
+      summary: Delete application
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Application deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+
+  /saved-jobs:
+    get:
+      operationId: getSavedJobs
+      tags: [savedJobs]
+      summary: Get saved jobs
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Saved jobs list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SavedJob"
+    post:
+      operationId: saveJob
+      tags: [savedJobs]
+      summary: Save a job
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveJobInput"
+      responses:
+        "201":
+          description: Job saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SavedJob"
+
+  /saved-jobs/{id}:
+    delete:
+      operationId: deleteSavedJob
+      tags: [savedJobs]
+      summary: Remove saved job
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Job removed from saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+
+  /alerts:
+    get:
+      operationId: getAlerts
+      tags: [alerts]
+      summary: Get job alerts
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Job alerts list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/JobAlert"
+    post:
+      operationId: createAlert
+      tags: [alerts]
+      summary: Create job alert
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobAlertInput"
+      responses:
+        "201":
+          description: Alert created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobAlert"
+
+  /alerts/{id}:
+    put:
+      operationId: updateAlert
+      tags: [alerts]
+      summary: Update job alert
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobAlertInput"
+      responses:
+        "200":
+          description: Alert updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobAlert"
+    delete:
+      operationId: deleteAlert
+      tags: [alerts]
+      summary: Delete job alert
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Alert deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+
+  /notifications:
+    get:
+      operationId: getNotifications
+      tags: [notifications]
+      summary: Get user notifications
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Notifications list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+
+  /notifications/read-all:
+    put:
+      operationId: markAllNotificationsRead
+      tags: [notifications]
+      summary: Mark all notifications as read
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: All notifications marked read
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+
+  /notifications/{id}/read:
+    put:
+      operationId: markNotificationRead
+      tags: [notifications]
+      summary: Mark notification as read
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Notification marked read
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Get admin platform statistics
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Admin statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+
+  /admin/users:
+    get:
+      operationId: getAdminUsers
+      tags: [admin]
+      summary: Get all users (admin)
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Users list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+  /dashboard/stats:
+    get:
+      operationId: getDashboardStats
+      tags: [users]
+      summary: Get dashboard statistics for current user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Dashboard stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardStats"
+
+  /jobs/trending:
+    get:
+      operationId: getTrendingJobs
+      tags: [jobs]
+      summary: Get trending jobs and skills
+      responses:
+        "200":
+          description: Trending data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrendingData"
+
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
     HealthStatus:
       type: object
@@ -34,3 +673,715 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+        - message
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+
+    RegisterInput:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        role:
+          type: string
+          enum: [seeker, admin]
+          default: seeker
+      required:
+        - name
+        - email
+        - password
+
+    LoginInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+      required:
+        - token
+        - user
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum: [seeker, admin]
+        isVerified:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        avatarUrl:
+          type: string
+        profileCompletion:
+          type: integer
+      required:
+        - id
+        - name
+        - email
+        - role
+        - isVerified
+        - createdAt
+
+    Profile:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        headline:
+          type: string
+        bio:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        experienceLevel:
+          type: string
+          enum: [fresher, junior, mid, senior, lead]
+        preferredRoles:
+          type: array
+          items:
+            type: string
+        preferredLocations:
+          type: array
+          items:
+            type: string
+        salaryMin:
+          type: integer
+        salaryMax:
+          type: integer
+        workMode:
+          type: string
+          enum: [remote, hybrid, onsite, any]
+        github:
+          type: string
+        linkedin:
+          type: string
+        portfolio:
+          type: string
+        phone:
+          type: string
+        location:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+
+    ProfileInput:
+      type: object
+      properties:
+        headline:
+          type: string
+        bio:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        experienceLevel:
+          type: string
+          enum: [fresher, junior, mid, senior, lead]
+        preferredRoles:
+          type: array
+          items:
+            type: string
+        preferredLocations:
+          type: array
+          items:
+            type: string
+        salaryMin:
+          type: integer
+        salaryMax:
+          type: integer
+        workMode:
+          type: string
+          enum: [remote, hybrid, onsite, any]
+        github:
+          type: string
+        linkedin:
+          type: string
+        portfolio:
+          type: string
+        phone:
+          type: string
+        location:
+          type: string
+
+    Resume:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        fileName:
+          type: string
+        parsedName:
+          type: string
+        parsedEmail:
+          type: string
+        parsedPhone:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        education:
+          type: array
+          items:
+            $ref: "#/components/schemas/Education"
+        experience:
+          type: array
+          items:
+            $ref: "#/components/schemas/Experience"
+        projects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Project"
+        atsScore:
+          type: integer
+          minimum: 0
+          maximum: 100
+        missingSkills:
+          type: array
+          items:
+            type: string
+        suggestions:
+          type: array
+          items:
+            type: string
+        targetRole:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        isActive:
+          type: boolean
+      required:
+        - id
+        - userId
+        - fileName
+        - atsScore
+        - skills
+        - createdAt
+
+    Education:
+      type: object
+      properties:
+        institution:
+          type: string
+        degree:
+          type: string
+        field:
+          type: string
+        startYear:
+          type: string
+        endYear:
+          type: string
+        gpa:
+          type: string
+      required:
+        - institution
+
+    Experience:
+      type: object
+      properties:
+        company:
+          type: string
+        title:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: string
+        description:
+          type: string
+        isCurrent:
+          type: boolean
+      required:
+        - company
+        - title
+
+    Project:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        technologies:
+          type: array
+          items:
+            type: string
+        url:
+          type: string
+      required:
+        - name
+
+    Job:
+      type: object
+      properties:
+        id:
+          type: string
+        externalId:
+          type: string
+        title:
+          type: string
+        company:
+          type: string
+        companyLogo:
+          type: string
+        location:
+          type: string
+        remoteType:
+          type: string
+          enum: [remote, hybrid, onsite]
+        salaryMin:
+          type: integer
+        salaryMax:
+          type: integer
+        salaryCurrency:
+          type: string
+        description:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        source:
+          type: string
+        sourceUrl:
+          type: string
+        postedAt:
+          type: string
+          format: date-time
+        employmentType:
+          type: string
+          enum: [fulltime, parttime, contract, internship, freelance]
+        experienceLevel:
+          type: string
+          enum: [fresher, junior, mid, senior, lead, any]
+        isActive:
+          type: boolean
+        isSaved:
+          type: boolean
+        hasApplied:
+          type: boolean
+      required:
+        - id
+        - title
+        - company
+        - location
+        - description
+        - source
+        - sourceUrl
+        - postedAt
+        - isActive
+
+    JobsResponse:
+      type: object
+      properties:
+        jobs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Job"
+        total:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+      required:
+        - jobs
+        - total
+        - page
+        - totalPages
+
+    RecommendedJob:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Job"
+        - type: object
+          properties:
+            matchScore:
+              type: integer
+              minimum: 0
+              maximum: 100
+            matchedSkills:
+              type: array
+              items:
+                type: string
+            missingSkills:
+              type: array
+              items:
+                type: string
+            matchReasons:
+              type: array
+              items:
+                type: string
+          required:
+            - matchScore
+            - matchedSkills
+            - missingSkills
+            - matchReasons
+
+    Application:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        jobId:
+          type: string
+        job:
+          $ref: "#/components/schemas/Job"
+        status:
+          type: string
+          enum: [saved, applied, assessment, interview, rejected, offer]
+        notes:
+          type: string
+        interviewDate:
+          type: string
+          format: date-time
+        appliedAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - jobId
+        - status
+        - appliedAt
+
+    ApplicationInput:
+      type: object
+      properties:
+        jobId:
+          type: string
+        status:
+          type: string
+          enum: [saved, applied, assessment, interview, rejected, offer]
+        notes:
+          type: string
+        interviewDate:
+          type: string
+          format: date-time
+      required:
+        - jobId
+        - status
+
+    ApplicationUpdateInput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [saved, applied, assessment, interview, rejected, offer]
+        notes:
+          type: string
+        interviewDate:
+          type: string
+          format: date-time
+
+    SavedJob:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        jobId:
+          type: string
+        job:
+          $ref: "#/components/schemas/Job"
+        savedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - jobId
+        - savedAt
+
+    SaveJobInput:
+      type: object
+      properties:
+        jobId:
+          type: string
+      required:
+        - jobId
+
+    JobAlert:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        keywords:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        remoteOnly:
+          type: boolean
+        experienceLevel:
+          type: string
+        frequency:
+          type: string
+          enum: [instant, daily, weekly]
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - keywords
+        - frequency
+        - isActive
+        - createdAt
+
+    JobAlertInput:
+      type: object
+      properties:
+        keywords:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        remoteOnly:
+          type: boolean
+        experienceLevel:
+          type: string
+        frequency:
+          type: string
+          enum: [instant, daily, weekly]
+        isActive:
+          type: boolean
+      required:
+        - keywords
+        - frequency
+
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        title:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+          enum: [job_match, application_update, alert, system, resume_score]
+        isRead:
+          type: boolean
+        jobId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - title
+        - message
+        - type
+        - isRead
+        - createdAt
+
+    DashboardStats:
+      type: object
+      properties:
+        totalApplications:
+          type: integer
+        savedJobs:
+          type: integer
+        profileCompletion:
+          type: integer
+        atsScore:
+          type: integer
+        activeAlerts:
+          type: integer
+        unreadNotifications:
+          type: integer
+        applicationsByStatus:
+          type: object
+          properties:
+            saved:
+              type: integer
+            applied:
+              type: integer
+            assessment:
+              type: integer
+            interview:
+              type: integer
+            rejected:
+              type: integer
+            offer:
+              type: integer
+          required:
+            - saved
+            - applied
+            - assessment
+            - interview
+            - rejected
+            - offer
+        recentActivity:
+          type: array
+          items:
+            $ref: "#/components/schemas/ActivityItem"
+        topMatchedRoles:
+          type: array
+          items:
+            type: string
+        skillsInDemand:
+          type: array
+          items:
+            type: string
+      required:
+        - totalApplications
+        - savedJobs
+        - profileCompletion
+        - atsScore
+        - activeAlerts
+        - unreadNotifications
+        - applicationsByStatus
+        - recentActivity
+        - topMatchedRoles
+        - skillsInDemand
+
+    ActivityItem:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+      required:
+        - id
+        - type
+        - description
+        - timestamp
+
+    TrendingData:
+      type: object
+      properties:
+        trendingSkills:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendingSkill"
+        trendingRoles:
+          type: array
+          items:
+            type: string
+        hotCompanies:
+          type: array
+          items:
+            type: string
+      required:
+        - trendingSkills
+        - trendingRoles
+        - hotCompanies
+
+    TrendingSkill:
+      type: object
+      properties:
+        skill:
+          type: string
+        demand:
+          type: integer
+        growth:
+          type: number
+      required:
+        - skill
+        - demand
+        - growth
+
+    AdminStats:
+      type: object
+      properties:
+        totalUsers:
+          type: integer
+        resumesUploaded:
+          type: integer
+        totalAlerts:
+          type: integer
+        jobsFetched:
+          type: integer
+        totalApplications:
+          type: integer
+        activeUsers:
+          type: integer
+        newUsersToday:
+          type: integer
+      required:
+        - totalUsers
+        - resumesUploaded
+        - totalAlerts
+        - jobsFetched
+        - totalApplications
+        - activeUsers
+        - newUsersToday

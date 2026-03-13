@@ -91,6 +91,52 @@ Generated Zod schemas from the OpenAPI spec (e.g. `HealthCheckResponse`). Used b
 
 Generated React Query hooks and fetch client from the OpenAPI spec (e.g. `useHealthCheck`, `healthCheck`).
 
+### `artifacts/hiresync` (`@workspace/hiresync`)
+
+React + Vite frontend for the HireSync AI job finder platform. Served at path `/`.
+
+- **Tech**: React 19, Vite, TypeScript, TailwindCSS v4, Wouter (routing), TanStack Query (data fetching)
+- **Auth**: Custom JWT (stored as `hiresync_token` in localStorage, `Authorization: Bearer <token>` header)
+- **Design**: Premium dark SaaS theme - deep navy (#0D1224) background, violet/indigo primary, glassmorphism cards
+- **Key pages**: Landing (`/`), Login, Register, Dashboard (Recharts stats), Jobs, AI Matches, Resume ATS, Applications (Kanban), Saved Jobs, Alerts, Notifications, Profile, Admin
+- **API integration**: All data fetched via Orval-generated React Query hooks from `@workspace/api-client-react`
+- `getAuthRequestOptions()` in `lib/auth.ts` → returns `{ headers: { Authorization: "Bearer <token>" } }`
+- Toasts: Uses `sonner` library directly (`toast.success()`, `toast.error()`)
+- Images: `public/images/hero-bg.png`, `public/images/auth-abstract.png`
+
+### `artifacts/api-server` — Key Routes
+
+- `POST /api/auth/register` - Register user, returns `{token, user}`
+- `POST /api/auth/login` - Login, returns `{token, user}`
+- `GET /api/auth/me` - Get current user (requires Bearer token)
+- `GET /api/dashboard/stats` - Dashboard statistics
+- `GET /api/jobs/search` - Search/filter jobs (12 seeded demo jobs)
+- `GET /api/jobs/recommended` - AI-matched jobs based on user resume
+- `POST /api/saved-jobs` - Save a job `{jobId: string}`
+- `DELETE /api/saved-jobs/:id` - Remove saved job
+- `GET /api/resume` - Get user resumes
+- `POST /api/resume/upload` - Upload and ATS-analyze resume
+- `GET /api/applications` - Get user applications
+- `PUT /api/applications/:id` - Update application status
+- `GET /api/alerts` - Get job alerts
+- `POST /api/alerts` - Create job alert `{keywords, location, frequency, isActive}`
+- `DELETE /api/alerts/:id` - Delete alert
+- `GET /api/notifications` - Get notifications
+- `PUT /api/notifications/:id/read` - Mark notification read
+- `PUT /api/notifications/read-all` - Mark all notifications read
+- `GET /api/profile` - Get user profile
+- `PUT /api/profile` - Update user profile
+- `GET /api/admin/stats` - Admin stats (admin role required)
+- `GET /api/admin/users` - Admin users list (admin role required)
+
+### Database Schema (8 tables)
+
+`users`, `profiles`, `resumes`, `jobs`, `applications`, `saved_jobs`, `alerts`, `notifications`
+
+- All UUIDs as primary keys
+- Jobs seeded with 12 demo jobs at server startup if empty
+- `resumes` table stores ATS score and extracted skills JSON
+
 ### `scripts` (`@workspace/scripts`)
 
 Utility scripts package. Each script is a `.ts` file in `src/` with a corresponding npm script in `package.json`. Run scripts via `pnpm --filter @workspace/scripts run <script>`. Scripts can import any workspace package (e.g., `@workspace/db`) by adding it as a dependency in `scripts/package.json`.

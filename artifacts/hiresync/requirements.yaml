@@ -1,0 +1,21 @@
+packages:
+  "framer-motion": "For page transitions, list animations, and smooth interactions"
+  "recharts": "For the application status donut chart and analytics"
+  "react-dropzone": "For the resume upload drag-and-drop area"
+  "date-fns": "For formatting application dates and job posted times"
+  "clsx": "For conditional tailwind class merging"
+  "tailwind-merge": "For merging tailwind classes without conflicts"
+  "lucide-react": "For beautiful consistent icons"
+
+images:
+  - path: "artifacts/hiresync/public/images/hero-bg.png"
+    description: "Deep premium space background with abstract dark violet and navy geometric glassmorphism shapes and subtle starlight dust, suitable for a professional SaaS hero section"
+    aspect_ratio: "16:9"
+  - path: "artifacts/hiresync/public/images/auth-abstract.png"
+    description: "Abstract fluid gradient in dark indigo, electric violet, and deep blue with glassmorphism layers, highly polished 3D aesthetic"
+    aspect_ratio: "3:4"
+
+notes:
+  - Using generated Orval hooks from @workspace/api-client-react
+  - Token stored in localStorage as 'hiresync_token'
+  - Passing auth headers via request options in hooks

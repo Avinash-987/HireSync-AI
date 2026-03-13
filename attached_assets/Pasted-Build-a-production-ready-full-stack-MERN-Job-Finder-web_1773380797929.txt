@@ -1,0 +1,575 @@
+Build a production-ready, full-stack MERN Job Finder web application named “HireSync AI” for students and job seekers. The platform must connect to real-time job APIs, analyze uploaded resumes, recommend matching jobs, track applications, and notify users when relevant jobs are posted. The application must be modern, scalable, secure, mobile responsive, and portfolio-worthy.
+
+TECH STACK
+- Frontend: React.js + Vite
+- Backend: Node.js + Express.js
+- Database: MongoDB + Mongoose
+- Authentication: JWT + refresh tokens + bcrypt
+- State management: Redux Toolkit or Context API
+- UI: Tailwind CSS + shadcn/ui or clean custom component system
+- File upload: Multer or cloud storage integration
+- Notifications: Email + in-app + optional browser push
+- Scheduling: Node cron / BullMQ for background job sync and alerts
+- Resume parsing: NLP-based extraction from PDF/DOCX resumes
+- AI matching engine: semantic skill matching + keyword scoring + role fit analysis
+- Charts: Recharts
+- Deployment-ready: frontend on Vercel, backend on Vercel, DB on MongoDB Atlas 
+
+CORE IDEA
+The user signs up, creates a profile, uploads a resume, and gets:
+1. Resume analysis
+2. Skill extraction
+3. ATS score
+4. Recommended jobs from live job APIs
+5. Alerts when matching jobs appear
+6. Application tracker
+7. Personalized dashboard
+
+MAKE THIS A COMPLETE FULL-STACK PROJECT WITH CLEAN FOLDER STRUCTURE, WORKING APIs, DATABASE MODELS, AUTH FLOW, DASHBOARDS, RESPONSIVE UI, AND DETAILED COMMENTS.
+
+MAIN USER ROLES
+1. Job Seeker
+2. Admin
+
+JOB SEEKER FEATURES
+- Register / login / logout
+- Forgot password / reset password
+- OAuth-ready structure for Google login
+- Create and edit profile
+- Upload resume in PDF/DOCX
+- Resume parser extracts:
+  - full name
+  - email
+  - phone
+  - education
+  - skills
+  - projects
+  - experience
+  - certifications
+- Resume analysis dashboard:
+  - ATS score
+  - missing skills
+  - resume improvement suggestions
+  - job-role fit score
+  - keyword match insights
+- Search real-time jobs using external job APIs
+- Smart job recommendations based on:
+  - resume skills
+  - preferred role
+  - preferred location
+  - experience level
+  - salary expectation
+  - remote/hybrid/on-site preference
+- Save/bookmark jobs
+- One-click apply redirect to source
+- Track applications:
+  - saved
+  - applied
+  - interview
+  - rejected
+  - offer
+- Set job alerts for custom filters
+- Receive notifications:
+  - when new matching jobs are available
+  - when application reminder is due
+  - when resume score drops for a target role
+- View recommended courses/certifications for missing skills
+- Profile completion progress bar
+- View analytics:
+  - applications per week
+  - response rate
+  - top matched roles
+  - skills demand trend
+- Dark/light mode
+- Mobile responsive dashboard
+
+ADMIN FEATURES
+- Admin login
+- Manage users
+- Manage reported jobs
+- Monitor API logs
+- View platform analytics
+- Manage featured companies / featured jobs
+- Moderate notifications and email templates
+- View job sync history
+- Dashboard for total users, active alerts, resumes uploaded, jobs fetched, applications tracked
+
+ADDITIONAL ADVANCED FEATURES
+- AI-powered job match scoring engine
+- Resume-to-job similarity percentage
+- Skill gap analyzer
+- Auto-generated cover letter draft for a selected job
+- Interview questions generator based on selected job role
+- Resume version management
+- Weekly email digest of new matching jobs
+- Company insights page:
+  - company overview
+  - location
+  - website
+  - tags
+  - open roles
+- Salary insights module
+- Recently viewed jobs
+- Trending jobs and skills
+- Advanced filters:
+  - salary range
+  - location
+  - remote
+  - experience
+  - tech stack
+  - company name
+  - posted date
+- Smart notification preferences:
+  - instant
+  - daily
+  - weekly
+- Browser notification opt-in
+- User onboarding wizard
+- Search history
+- Recommended portfolio projects based on career goal
+- Fraud/spam job detection flagging logic
+- Dead-link checker for outdated job posts
+- Admin-configurable job alert keywords
+
+REAL-TIME JOB API INTEGRATION
+Create a service layer to integrate with real-time job APIs. Keep it modular so APIs can be replaced easily. Add support for:
+- Adzuna API
+- JSearch / RapidAPI jobs endpoint
+- RemoteOK API
+- Arbeitnow API
+- The Muse Jobs API (if applicable)
+Normalize all job data into a consistent internal format.
+
+JOB OBJECT NORMALIZATION
+Each job should be stored with:
+- title
+- company
+- location
+- remote type
+- salary
+- description
+- skills/tags
+- source
+- source URL
+- posted date
+- company logo if available
+- employment type
+- experience level
+- relevance score
+
+MATCHING LOGIC
+Build a job recommendation engine that:
+- parses resume skills
+- compares user profile skills with job description tags
+- scores jobs on:
+  - skills match
+  - role match
+  - location preference
+  - experience match
+  - salary fit
+- shows:
+  - match percentage
+  - matched skills
+  - missing skills
+  - reasons why this job is recommended
+
+NOTIFICATION SYSTEM
+Implement a working notification engine:
+- in-app notifications stored in database
+- email notifications using Nodemailer
+- optional web push notifications
+- cron jobs/background workers to:
+  - fetch latest jobs every X minutes
+  - compare with saved alerts
+  - notify matching users
+- notification center UI with read/unread state
+
+APPLICATION TRACKER
+Users can maintain status for each job:
+- saved
+- applied
+- assessment
+- interview scheduled
+- rejected
+- offer received
+Include notes, reminders, interview date, company contact, and follow-up reminder.
+
+RESUME ANALYSIS MODULE
+Build a resume intelligence module with:
+- PDF/DOCX upload
+- text extraction
+- section detection
+- skill extraction using predefined tech skill dictionary + keyword processing
+- ATS score formula
+- grammar/improvement suggestion placeholders
+- recommendation engine for better resume targeting
+- show role-specific improvements, e.g. Full Stack Developer / Data Analyst / Java Developer
+
+PAGES TO BUILD
+Public Pages
+- Home page
+- Features page
+- Pricing/demo section (optional, just UI)
+- About
+- Contact
+- Login
+- Signup
+- Forgot password
+- Reset password
+
+User Pages
+- Dashboard
+- My Profile
+- Resume Analyzer
+- Job Recommendations
+- Job Search
+- Saved Jobs
+- Applied Jobs
+- Alerts & Notifications
+- Application Tracker
+- Company Insights
+- Skill Gap Analysis
+- Settings
+
+Admin Pages
+- Admin Dashboard
+- User Management
+- Jobs Monitor
+- Alerts Monitor
+- Analytics
+- System Logs
+
+UI/UX REQUIREMENTS
+Design should look premium, modern, and recruiter-grade:
+- glassmorphism + subtle gradients
+- clean cards
+- soft shadows
+- rounded-xl/2xl components
+- modern sidebar dashboard
+- top navbar with search and profile menu
+- role-based navigation
+- elegant charts and badges
+- responsive on mobile/tablet/desktop
+- skeleton loaders
+- empty states
+- toast notifications
+- form validation
+- accessible color contrast
+
+FRONTEND REQUIREMENTS
+- React + Vite setup
+- Tailwind CSS configured
+- reusable components
+- protected routes
+- auth state persistence
+- API service layer using Axios
+- loading states and error boundaries
+- file upload UI
+- charts for analytics
+- filter drawers and search bars
+- modular folder structure
+
+BACKEND REQUIREMENTS
+- Express server with modular architecture
+- controllers, routes, models, middleware, services, utils
+- JWT auth with refresh token support
+- role-based access control
+- file upload handling
+- resume parsing service
+- job aggregation service
+- recommendation service
+- alert scheduler
+- notification service
+- admin analytics service
+- proper error handling
+- rate limiting
+- helmet
+- cors
+- input validation with Joi/Zod/express-validator
+- centralized logger
+
+DATABASE MODELS
+Create proper Mongoose models for:
+- User
+- Profile
+- Resume
+- Job
+- SavedJob
+- Application
+- JobAlert
+- Notification
+- Company
+- AdminLog
+- RefreshToken
+- SkillCatalog
+
+SAMPLE SCHEMA IDEAS
+User:
+- name
+- email
+- password
+- role
+- isVerified
+- profileId
+- resumeIds
+- notificationPreferences
+
+Profile:
+- userId
+- headline
+- bio
+- skills
+- experienceLevel
+- preferredRoles
+- preferredLocations
+- salaryExpectation
+- workMode
+- portfolioLinks
+- github
+- linkedin
+
+Resume:
+- userId
+- originalFile
+- parsedText
+- extractedSkills
+- extractedEducation
+- extractedProjects
+- atsScore
+- suggestions
+- targetRole
+
+Job:
+- externalId
+- title
+- company
+- description
+- location
+- remoteType
+- skills
+- salary
+- source
+- sourceUrl
+- postedAt
+- normalizedScore
+
+Application:
+- userId
+- jobId
+- status
+- notes
+- interviewDate
+- appliedAt
+- reminderDate
+
+API ROUTES
+Auth
+- POST /api/auth/register
+- POST /api/auth/login
+- POST /api/auth/refresh
+- POST /api/auth/logout
+- POST /api/auth/forgot-password
+- POST /api/auth/reset-password
+
+User/Profile
+- GET /api/users/me
+- PUT /api/users/me
+- GET /api/profile
+- PUT /api/profile
+
+Resume
+- POST /api/resume/upload
+- GET /api/resume/my
+- GET /api/resume/:id
+- DELETE /api/resume/:id
+- POST /api/resume/analyze
+
+Jobs
+- GET /api/jobs/search
+- GET /api/jobs/recommended
+- GET /api/jobs/:id
+- POST /api/jobs/sync
+
+Saved Jobs
+- POST /api/saved-jobs
+- GET /api/saved-jobs
+- DELETE /api/saved-jobs/:id
+
+Applications
+- POST /api/applications
+- GET /api/applications
+- PUT /api/applications/:id
+- DELETE /api/applications/:id
+
+Alerts
+- POST /api/alerts
+- GET /api/alerts
+- PUT /api/alerts/:id
+- DELETE /api/alerts/:id
+
+Notifications
+- GET /api/notifications
+- PUT /api/notifications/:id/read
+- PUT /api/notifications/read-all
+
+Admin
+- GET /api/admin/stats
+- GET /api/admin/users
+- GET /api/admin/jobs
+- GET /api/admin/logs
+
+WORKING LOGIC REQUIREMENTS
+- After resume upload, automatically parse and store structured data
+- When user opens recommendations page, fetch best matched jobs
+- Job alerts run on interval and compare latest jobs with user preferences
+- When matched jobs are found, create DB notification and send email
+- Application tracker should allow manual status updates
+- Recommended jobs should show explanation of why they match
+- All external job APIs should be wrapped in services with fallback handling
+
+SECURITY
+- Hash passwords
+- JWT auth
+- refresh token rotation
+- secure cookies optional
+- environment variables
+- rate limiting
+- helmet
+- server-side validation
+- sanitize inputs
+- protected admin routes
+- secure file upload validation
+
+PROJECT STRUCTURE
+Generate a clean monorepo-like structure:
+
+root/
+  client/
+  server/
+  README.md
+  .env.example
+
+Client structure:
+- src/components
+- src/pages
+- src/layouts
+- src/hooks
+- src/store
+- src/services
+- src/utils
+- src/features
+- src/context
+
+Server structure:
+- src/config
+- src/controllers
+- src/routes
+- src/models
+- src/middleware
+- src/services
+- src/utils
+- src/jobs
+- src/validators
+
+DASHBOARD WIDGETS
+User dashboard should include:
+- profile completion
+- latest recommendations
+- ATS score card
+- job alerts summary
+- applications status overview
+- saved jobs count
+- recent notifications
+- trending skills
+
+Admin dashboard should include:
+- total users
+- resumes uploaded
+- total alerts
+- jobs fetched today
+- most searched roles
+- API success/failure stats
+
+SEED / DEMO DATA
+Add seed scripts for:
+- demo users
+- demo jobs
+- demo companies
+- sample notifications
+- sample applications
+This should help the project run easily for testing.
+
+README REQUIREMENTS
+Create a strong README with:
+- project overview
+- features
+- tech stack
+- installation
+- environment variables
+- API setup
+- job API keys setup
+- run locally
+- deployment guide
+- demo credentials
+- future improvements
+
+ENVIRONMENT VARIABLES
+Create .env.example for both frontend and backend including:
+- MONGO_URI
+- JWT_SECRET
+- JWT_REFRESH_SECRET
+- CLIENT_URL
+- SERVER_URL
+- EMAIL_USER
+- EMAIL_PASS
+- ADZUNA_APP_ID
+- ADZUNA_APP_KEY
+- RAPIDAPI_KEY
+- CLOUDINARY credentials if needed
+
+CODE QUALITY
+- Write clean, production-style code
+- Use modular reusable components
+- Add comments for important logic
+- Use proper naming conventions
+- Avoid placeholder-only code
+- Build actual working flows wherever possible
+- Where external API keys are required, provide graceful fallback mock data mode
+- Ensure the app can still run locally even without paid APIs
+
+BONUS FEATURES
+- AI cover letter generator
+- interview prep assistant
+- resume scoring by target job role
+- admin broadcast notifications
+- export job tracker as CSV
+- calendar integration placeholder for interview reminders
+- multilingual-ready structure
+- PWA-ready structure
+
+FINAL OUTPUT EXPECTATION
+Generate the complete project with:
+- working frontend
+- working backend
+- connected MongoDB models
+- authentication
+- resume upload and analysis flow
+- job fetching service
+- recommendation system
+- notification engine
+- admin panel
+- responsive premium UI
+- proper README
+- .env.example
+- seed data
+- deployment-ready configuration
+
+Also:
+1. Explain the folder structure
+2. Generate all important backend and frontend files
+3. Include sample API integration service
+4. Include dummy fallback data when API keys are absent
+5. Include instructions to run both client and server
+6. Keep code scalable and interview/project-review ready
+
+The result should feel like a serious final-year portfolio project or startup MVP, not a basic CRUD app.
