@@ -1,2 +1,54 @@
+declare global {
+  interface File {}
+  interface Blob {}
+}
+
 export * from "./generated/api";
-export * from "./generated/types";
+export type {
+  ActivityItem,
+  AdminStats,
+  Application,
+  ApplicationInput,
+  ApplicationInputStatus,
+  ApplicationStatus,
+  ApplicationUpdateInput,
+  ApplicationUpdateInputStatus,
+  AuthResponse,
+  DashboardStats,
+  DashboardStatsApplicationsByStatus,
+  Education,
+  ErrorResponse,
+  Experience,
+  HealthStatus,
+  Job,
+  JobAlert,
+  JobAlertFrequency,
+  JobAlertInput,
+  JobAlertInputFrequency,
+  JobEmploymentType,
+  JobExperienceLevel,
+  JobRemoteType,
+  JobsResponse,
+  LoginInput,
+  MessageResponse,
+  Notification,
+  NotificationType,
+  Profile,
+  ProfileExperienceLevel,
+  ProfileInput,
+  ProfileInputExperienceLevel,
+  ProfileInputWorkMode,
+  ProfileWorkMode,
+  Project,
+  RecommendedJob,
+  RegisterInput,
+  RegisterInputRole,
+  Resume,
+  SavedJob,
+  SaveJobInput,
+  SearchJobsParams,
+  TrendingData,
+  TrendingSkill,
+  User,
+  UserRole
+} from "./generated/types";
