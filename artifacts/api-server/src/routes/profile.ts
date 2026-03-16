@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { Router } from "express";
 import { db, profilesTable, usersTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
@@ -42,7 +43,6 @@ router.put("/", auth, async (req: AuthRequest, res) => {
     if (location !== undefined) updateData.location = location;
 
     if (!existing) {
-      const crypto = await import("crypto");
       const [profile] = await db.insert(profilesTable).values({
         id: crypto.randomUUID(),
         userId: req.user!.id,

@@ -1,9 +1,9 @@
+import crypto from "crypto";
 import { Router } from "express";
 import { db, notificationsTable } from "@workspace/db";
 import { eq, and } from "drizzle-orm";
 import { makeAuthMiddleware, AuthRequest } from "./auth.js";
 
-const crypto = await import("crypto");
 const router = Router();
 const auth = makeAuthMiddleware();
 

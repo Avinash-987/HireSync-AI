@@ -1,9 +1,9 @@
+import crypto from "crypto";
 import { Router } from "express";
 import { db, usersTable, profilesTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
 import { authenticate, AuthRequest } from "../lib/auth.js";
 
-const crypto = await import("crypto");
 const router = Router();
 
 const JWT_SECRET = process.env.JWT_SECRET || "hiresync-secret-key-2024";
