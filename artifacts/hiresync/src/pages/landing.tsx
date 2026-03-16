@@ -10,7 +10,9 @@ import {
   LineChart, 
   Zap,
   TrendingUp,
-  Star
+  Star,
+  LayoutList,
+  Mail
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -170,10 +172,10 @@ export default function LandingPage() {
             {[
               { icon: BrainCircuit, title: "AI Resume Analysis", desc: "Instantly see how ATS systems read your resume and get actionable tips to improve your score." },
               { icon: Target, title: "Smart Job Matching", desc: "Stop scrolling endlessly. Get curated matches based on your unique skills, experience, and preferences." },
-              { icon: ClipboardList, title: "Application Tracker", desc: "Manage all your applications in one beautiful kanban board. Never miss a follow-up." },
+              { icon: LayoutList, title: "Application Tracker", desc: "Manage all your applications in one beautiful kanban board. Never miss a follow-up." },
               { icon: TrendingUp, title: "Skill Gap Analysis", desc: "Identify missing skills for your target roles and get recommendations on what to learn next." },
               { icon: Zap, title: "One-Click Apply", desc: "Apply faster with auto-filled applications using your optimized profile and resumes." },
-              { icon: Bell, title: "Real-time Alerts", desc: "Be the first to know when a high-matching job is posted in your desired location or remote." }
+              { icon: Mail, title: "Real-time Alerts", desc: "Be the first to know when a high-matching job is posted in your desired location or remote." }
             ].map((feature, i) => (
               <div key={i} className="glass-card p-6 rounded-2xl border border-white/5 hover:bg-white/[0.02] transition-colors">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">

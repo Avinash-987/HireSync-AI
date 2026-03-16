@@ -2,7 +2,8 @@ import crypto from "crypto";
 import { Router } from "express";
 import { db, usersTable, profilesTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
-import { authenticate, AuthRequest } from "../lib/auth.js";
+import { authenticate, type AuthRequest } from "../lib/auth.js";
+export type { AuthRequest };
 
 const router = Router();
 

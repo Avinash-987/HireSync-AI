@@ -63,7 +63,7 @@ router.post("/", auth, async (req: AuthRequest, res) => {
 router.delete("/:id", auth, async (req: AuthRequest, res) => {
   try {
     const [deleted] = await db.delete(savedJobsTable).where(
-      and(eq(savedJobsTable.id, req.params.id), eq(savedJobsTable.userId, req.user!.id))
+      and(eq(savedJobsTable.id, req.params.id as string), eq(savedJobsTable.userId, req.user!.id))
     ).returning();
 
     if (!deleted) return res.status(404).json({ message: "Saved job not found" });

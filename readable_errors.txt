@@ -1,0 +1,80 @@
+﻿
+> @workspace/api-server@0.0.0 typecheck C:\Users\adyas\OneDrive\Desktop\Career-Compass\artifacts\api-server
+> tsc -p tsconfig.json --noEmit
+
+src/routes/alerts.ts(55,11): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "alerts"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "alerts"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: [...]; baseColumn: never; identity: undefined; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "id"; tableName: "alerts"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: [...]; baseColumn: never; identity: undefined; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "alerts"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: [...]; baseColumn: never; identity: undefined; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+src/routes/alerts.ts(68,11): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "alerts"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "alerts"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: [...]; baseColumn: never; identity: undefined; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "id"; tableName: "alerts"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: [...]; baseColumn: never; identity: undefined; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "alerts"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: [...]; baseColumn: never; identity: undefined; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+src/routes/applications.ts(88,11): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "applications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "applications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "id"; tableName: "applications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "applications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+src/routes/applications.ts(105,11): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "applications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "applications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "id"; tableName: "applications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "applications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+src/routes/jobs.ts(317,67): error TS2367: This comparison appears to be unintentional because the types '"fresher" | "junior" | "mid" | "senior" | "lead"' and '"any"' have no overlap.
+src/routes/notifications.ts(68,11): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "notifications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "notifications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "id"; tableName: "notifications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "notifications"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+src/routes/resume.ts(203,11): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "resumes"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "resumes"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "id"; tableName: "resumes"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "resumes"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+src/routes/resume.ts(216,11): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "resumes"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "resumes"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "id"; tableName: "resumes"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "resumes"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+src/routes/saved-jobs.ts(66,11): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "saved_jobs"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "saved_jobs"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "id"; tableName: "saved_jobs"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "saved_jobs"; dataType: "string"; columnType: "PgText"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+C:\Users\adyas\OneDrive\Desktop\Career-Compass\artifacts\api-server:
+ΓÇëERR_PNPM_RECURSIVE_RUN_FIRST_FAILΓÇë @workspace/api-server@0.0.0 typecheck: `tsc -p tsconfig.json --noEmit`
+Exit status 2

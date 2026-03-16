@@ -22,9 +22,9 @@ export default function AdminPage() {
           {[
             { label: "Total Users", value: stats.totalUsers, icon: Users, color: "text-blue-400", bg: "bg-blue-400/10" },
             { label: "New Today", value: stats.newUsersToday, icon: TrendingUp, color: "text-emerald-400", bg: "bg-emerald-400/10" },
-            { label: "Resumes", value: stats.totalResumes, icon: FileText, color: "text-purple-400", bg: "bg-purple-400/10" },
+            { label: "Resumes", value: stats.resumesUploaded, icon: FileText, color: "text-purple-400", bg: "bg-purple-400/10" },
             { label: "Applications", value: stats.totalApplications, icon: Briefcase, color: "text-amber-400", bg: "bg-amber-400/10" },
-            { label: "Active Alerts", value: stats.activeAlerts, icon: BellRing, color: "text-pink-400", bg: "bg-pink-400/10" },
+            { label: "Active Alerts", value: stats.totalAlerts, icon: BellRing, color: "text-pink-400", bg: "bg-pink-400/10" },
           ].map((stat, i) => (
             <div key={i} className="glass-card p-5 rounded-2xl flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-2">

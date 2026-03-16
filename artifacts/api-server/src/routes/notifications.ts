@@ -65,7 +65,7 @@ router.put("/read-all", auth, async (req: AuthRequest, res) => {
 router.put("/:id/read", auth, async (req: AuthRequest, res) => {
   try {
     const [notification] = await db.update(notificationsTable).set({ isRead: true }).where(
-      and(eq(notificationsTable.id, req.params.id), eq(notificationsTable.userId, req.user!.id))
+      and(eq(notificationsTable.id, req.params.id as string), eq(notificationsTable.userId, req.user!.id))
     ).returning();
 
     if (!notification) return res.status(404).json({ message: "Notification not found" });

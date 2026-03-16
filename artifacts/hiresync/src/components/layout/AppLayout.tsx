@@ -7,9 +7,9 @@ import {
   FileText, 
   Kanban, 
   Bookmark, 
-  Bell, 
-  BellRing, 
-  User, 
+  Inbox, 
+  Info, 
+  User as UserIcon, 
   ShieldAlert,
   Menu,
   LogOut
@@ -25,9 +25,9 @@ const NAV_ITEMS = [
   { href: "/resume", label: "Resume ATS", icon: FileText },
   { href: "/applications", label: "Applications", icon: Kanban },
   { href: "/saved-jobs", label: "Saved Jobs", icon: Bookmark },
-  { href: "/alerts", label: "Job Alerts", icon: BellRing },
-  { href: "/notifications", label: "Notifications", icon: Bell },
-  { href: "/profile", label: "Profile", icon: User },
+  { href: "/alerts", label: "Job Alerts", icon: Info },
+  { href: "/notifications", label: "Notifications", icon: Inbox },
+  { href: "/profile", label: "Profile", icon: UserIcon },
 ];
 
 export function AppLayout({ children }: { children: ReactNode }) {
@@ -45,6 +45,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const { data: user, isLoading, isError } = useAuthGetMe({
     request: getAuthRequestOptions(),
     query: {
+      queryKey: ["/api/auth/me"],
       retry: false,
       enabled: !!token
     }
@@ -132,11 +133,11 @@ export function AppLayout({ children }: { children: ReactNode }) {
         <div className="p-4 border-t border-white/5">
           <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
             <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold">
-              {user.name.charAt(0)}
+              {(user as any).name.charAt(0)}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold text-foreground truncate">{user.name}</p>
-              <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+              <p className="text-sm font-bold text-foreground truncate">{(user as any).name}</p>
+              <p className="text-xs text-muted-foreground truncate">{(user as any).email}</p>
             </div>
             <button onClick={handleLogout} className="p-2 hover:bg-white/10 rounded-lg text-muted-foreground hover:text-destructive transition-colors">
               <LogOut className="h-4 w-4" />

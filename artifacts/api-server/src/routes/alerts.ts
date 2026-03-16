@@ -52,7 +52,7 @@ router.put("/:id", auth, async (req: AuthRequest, res) => {
     if (isActive !== undefined) updateData.isActive = isActive;
 
     const [alert] = await db.update(alertsTable).set(updateData).where(
-      and(eq(alertsTable.id, req.params.id), eq(alertsTable.userId, req.user!.id))
+      and(eq(alertsTable.id, req.params.id as string), eq(alertsTable.userId, req.user!.id))
     ).returning();
 
     if (!alert) return res.status(404).json({ message: "Alert not found" });
@@ -65,7 +65,7 @@ router.put("/:id", auth, async (req: AuthRequest, res) => {
 router.delete("/:id", auth, async (req: AuthRequest, res) => {
   try {
     const [deleted] = await db.delete(alertsTable).where(
-      and(eq(alertsTable.id, req.params.id), eq(alertsTable.userId, req.user!.id))
+      and(eq(alertsTable.id, req.params.id as string), eq(alertsTable.userId, req.user!.id))
     ).returning();
 
     if (!deleted) return res.status(404).json({ message: "Alert not found" });

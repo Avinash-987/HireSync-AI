@@ -9,6 +9,6 @@ export const getAuthHeaders = () => {
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
-export const getAuthRequestOptions = () => ({
+export const getAuthRequestOptions = (): any => ({
   headers: getAuthHeaders()
 });

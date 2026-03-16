@@ -200,7 +200,7 @@ Chat Application - Real-time messaging using Node.js and WebSockets`;
 router.get("/:id", auth, async (req: AuthRequest, res) => {
   try {
     const [resume] = await db.select().from(resumesTable).where(
-      and(eq(resumesTable.id, req.params.id), eq(resumesTable.userId, req.user!.id))
+      and(eq(resumesTable.id, req.params.id as string), eq(resumesTable.userId, req.user!.id))
     ).limit(1);
 
     if (!resume) return res.status(404).json({ message: "Resume not found" });
@@ -213,7 +213,7 @@ router.get("/:id", auth, async (req: AuthRequest, res) => {
 router.delete("/:id", auth, async (req: AuthRequest, res) => {
   try {
     const [deleted] = await db.delete(resumesTable).where(
-      and(eq(resumesTable.id, req.params.id), eq(resumesTable.userId, req.user!.id))
+      and(eq(resumesTable.id, req.params.id as string), eq(resumesTable.userId, req.user!.id))
     ).returning();
 
     if (!deleted) return res.status(404).json({ message: "Resume not found" });

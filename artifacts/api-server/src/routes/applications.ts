@@ -85,7 +85,7 @@ router.put("/:id", auth, async (req: AuthRequest, res) => {
     if (interviewDate !== undefined) updateData.interviewDate = interviewDate ? new Date(interviewDate) : null;
 
     const [app] = await db.update(applicationsTable).set(updateData).where(
-      and(eq(applicationsTable.id, req.params.id), eq(applicationsTable.userId, req.user!.id))
+      and(eq(applicationsTable.id, req.params.id as string), eq(applicationsTable.userId, req.user!.id))
     ).returning();
 
     if (!app) return res.status(404).json({ message: "Application not found" });
@@ -102,7 +102,7 @@ router.put("/:id", auth, async (req: AuthRequest, res) => {
 router.delete("/:id", auth, async (req: AuthRequest, res) => {
   try {
     const [deleted] = await db.delete(applicationsTable).where(
-      and(eq(applicationsTable.id, req.params.id), eq(applicationsTable.userId, req.user!.id))
+      and(eq(applicationsTable.id, req.params.id as string), eq(applicationsTable.userId, req.user!.id))
     ).returning();
 
     if (!deleted) return res.status(404).json({ message: "Application not found" });

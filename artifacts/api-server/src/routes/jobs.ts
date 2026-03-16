@@ -314,7 +314,7 @@ router.get("/search", auth, async (req: AuthRequest, res) => {
       jobs = jobs.filter(j => j.remoteType === remote);
     }
     if (experience) {
-      jobs = jobs.filter(j => j.experienceLevel === experience || j.experienceLevel === "any");
+      jobs = jobs.filter(j => (j.experienceLevel as string) === experience || (j.experienceLevel as string) === "any");
     }
 
     const total = jobs.length;
@@ -409,7 +409,7 @@ router.get("/trending", async (req, res) => {
 
 router.get("/:id", auth, async (req: AuthRequest, res) => {
   try {
-    const job = DEMO_JOBS.find(j => j.id === req.params.id);
+    const job = DEMO_JOBS.find(j => j.id === (req.params.id as string));
     if (!job) return res.status(404).json({ message: "Job not found" });
 
     const savedJobIds = new Set<string>();
